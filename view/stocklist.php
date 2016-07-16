@@ -86,7 +86,8 @@
                                                                 echo '<td>' . number_format($v['selling_price']) . '</td>';
                                                                 echo '<td>' . date('d-m-Y H:i:s', strtotime($v['upload_date'])) . '</td>';
                                                                 echo '<td>' . $m[intval($mth) - 1] . '</td>';
-                                                                echo '<td class="hidden-xs">&nbsp;';
+                                                                echo '<td class="hidden-xs">&nbsp;.</td>';
+                                                                echo '</tr>';
                                                             }
                                                             ?>
 

@@ -247,7 +247,14 @@
         <script src="assets/sparkline/easy-pie-chart.js"></script>
         <script src="js/select-checkbox.js"></script> 
         <script src="js/to-do-admin.js"></script> 
-
+        <script src="http://cdn.jsdelivr.net/webshim/1.12.4/extras/modernizr-custom.js"></script>
+        <!-- polyfiller file to detect and load polyfills -->
+        <script src="http://cdn.jsdelivr.net/webshim/1.12.4/polyfiller.js"></script>
+        <script>
+          webshims.setOptions('waitReady', false);
+          webshims.setOptions('forms-ext', {types: 'date'});
+          webshims.polyfill('forms forms-ext');
+        </script>
         <!--switcher html start-->
         <!-- <div class="demo_changer active" style="right: 0px;">
           <div class="demo-icon"></div>

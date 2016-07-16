@@ -160,21 +160,10 @@
                                             </div>
                                         </div>
                                         <div class="form-group lable-padd">
-                                            <label class="col-sm-3">Reversal Type</label>
-                                            <div class="col-sm-6">
-                                                <select name="reversal_type"  class="form-control" required>
-                                                    <!--<option>Customer Reversal</option>-->
-                                                    <option>Factory Return</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-3 left-align">
-                                                <p class="help-block"></p>
-                                            </div>
-                                        </div>
-                                        <div class="form-group lable-padd">
                                             <label class="col-sm-3">Sales Area</label>
                                             <div class="col-sm-6">
-                                                <select name="sales_area"  class="form-control" required>
+                                                <select id="sales_area" name="sales_area"  class="form-control" required>
+                                                    <option>--Select--</option>
                                                     <option>Abuja</option>
                                                     <option>Lagos</option>
                                                     <option>Jos</option>
@@ -184,6 +173,33 @@
                                                 <p class="help-block"></p>
                                             </div>
                                         </div>
+                                        <div class="form-group lable-padd">
+                                            <label class="col-sm-3">Reversal Type</label>
+                                            <div class="col-sm-6">
+                                                <select id="reversal_type" name="reversal_type"  class="form-control" required>
+                                                    <option>--Select--</option>
+                                                    <option value="1">Return to Produced Stock</option>
+                                                    <option value="2">Return to Sales Area </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-3 left-align">
+                                                <p class="help-block"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group lable-padd" id="customerDiv">
+                                            <label class="col-sm-3">Customer</label>
+                                            <div class="col-sm-6">
+                                                <select id="customer" name="customer"  class="form-control">
+                                                    <!--<option>Customer Reversal</option>-->
+                                                    
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-3 left-align">
+                                                <p class="help-block"></p>
+                                            </div>
+                                        </div>
+                                        
+                                        
                                         
                                        
                                          
@@ -213,6 +229,7 @@
         <script src="js/jquery.js"></script> 
         <script type="text/javascript">
             $(document).ready(function () {
+                $('#customerDiv').hide();
                 $('#clearBtn').click(function () {
                     $('#fullname').val('');
                     $('#username').val('');
@@ -231,7 +248,7 @@
                     }
                 });
                 
-                $('#priceform').submit(function(){
+                $('#reverseForm').submit(function(){
                     var error = 0;
                     $(this).find('select').each(function(){
                         if($(this).val() === '--Select--'){
@@ -244,6 +261,52 @@
                         return false;
                     }else{
                         return true;
+                    }
+                });
+                
+                var customerlist = [];
+                var uniqueCustomers = [];
+                var custids = [];
+                var uniquecustids = [];
+                var rows = '';
+                $('#reversal_type').change(function(){
+                    var rt = $(this).val();
+                    if(rt === '2'){
+                        var s_area = $('#sales_area').val();
+                        if(s_area.toString().indexOf('Select') > -1 ){
+                            alert('Select a Sales Area First!')
+                            $(this).val('1');
+                        }else{
+                           
+                           $('#customerDiv').slideDown('slow');
+                            $.post('reversal',{cust_check:true,sales_area:$('#sales_area').val()},function(msg,stat,xhr){
+                                if(xhr.readyState === 4){
+                                    if(xhr.status === 200){
+                                        var result = JSON.parse($.trim(msg));
+                                        window.localStorage.setItem('customers',result);
+                                        for(var a in result){
+                                            customerlist.push(result[a].cust_name);
+                                            custids.push(result[a].cust_id);
+                                        }
+                                        $.each(customerlist,function(i,el){
+                                            if($.inArray(el,uniqueCustomers) === -1){
+                                                uniqueCustomers.push(el);
+                                                uniquecustids.push(custids[i]);
+                                                rows += '<option value="'+custids[i]+'">'+el+'</option>';
+                                                
+                                            }
+                                        });
+                                        $('#customer').html(rows);
+                                        
+                                    }
+                                }
+                            });  
+                        }
+                        
+                    }
+                    else{
+                        $('#customerDiv').slideUp('slow');
+                        $('#customerDiv').html('');
                     }
                 });
             });
