@@ -660,7 +660,7 @@ class Controller {
                             'amount' => floatval($salesdocument[$i]['unit_price']),
                             'sales_area' => $salesdocument[$i]['sales_area'],
                             'remit_date' => $_POST['documentdate'],
-                            'remit_date' => date('Y-m-d H:i:s'),
+//                            'remit_date' => date('Y-m-d H:i:s'),
                             'current_balance' => $aPrev[1]
                         );
 
@@ -1085,7 +1085,8 @@ class Controller {
                                 array_push($salesids, $f['sales_doc_no']);
                             }
                         }
-
+                        
+//                        print_r($total_qty_for_stock);exit();
                         if (intval($quantity) > intval($total_qty_for_stock)) {
                             $this->current_page = 'view/reversalfailedqty.php';
                         } else {
@@ -1152,6 +1153,7 @@ class Controller {
                                     array_push($salesids_remit, $f['sales_doc_no']);
                                 }
                             }
+                            $this->current_page = 'view/reversalsuccess.php';
                         }
                     } else {
                         $this->current_page = 'view/reversalfailedavail.php';
@@ -1561,6 +1563,9 @@ class Controller {
 
             $customers = $this->model->map_request('retrieve', 'customers', $_POST);
             $_SESSION['all_naik_customers'] = $customers;
+            
+            $cashreturns = $this->model->map_request('retrieve', 'cash_returns', $_POST);
+            $_SESSION['cash_returns'] = $cashreturns;
         }
         if ($_GET['view'] == 'stockrequest') {
             $res = $this->model->map_request('retrieve', 'stocks', $_POST, 'sales_area', 'Factory ' . $_SESSION['user']['sales_area']);

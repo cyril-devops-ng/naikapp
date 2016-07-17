@@ -89,9 +89,10 @@
                                                 <th>Stock Name</th>
                                                 <th class="hidden-xs">Shipped</th>
                                                 <th class="hidden-xs">Previous Balance</th>
-                                                <th class="hidden-xs">Balance</th>
                                                 <th class="hidden-xs">Sold</th>
+                                                <th class="hidden-xs">Balance</th>
                                                 <th class="hidden-xs">Value Sold</th>
+                                                <th class="hidden-xs">Value in Store</th>
                                                 <th class="hidden-xs">Date</th>
                                                 <th class="hidden-xs">Month</th>
                                                 <th class="hidden-xs">Sales Area</th>
@@ -99,7 +100,8 @@
                                         </thead>
                                         <tfoot>
                                             <tr>
-                                                <th colspan="5" style="text-align:right">Total:</th>
+                                                <th colspan="4" style="text-align:right">Total:</th>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -112,6 +114,7 @@
                                            $i = 1;
                                             $month = 'January,February,March,April,May,June,July,August,September,October,November,December';
                                             $m = explode(',', $month);
+                                            $uniquesales = array();
                                             foreach($_SESSION['admin_sales'] as $k=>$v){
                                                 $date = date('d-m-Y H:i:s', strtotime($v['sales_date']));
                                                 $d = explode(' ', $date)[0];
@@ -128,39 +131,64 @@
                                                    
                                                     
                                                     $check = 0;
+                                                    
                                                     while($row = mysqli_fetch_array($query)){
+                                                        $date = date('d-m-Y H:i:s', strtotime($row['remit_date']));
+                                                        $d = explode(' ', $date)[0];
+                                                        $mth = explode('-', $d)[1];
                                                         ++$check ;
                                                         $sold = floatval($row['current_balance']) - floatval($row['quantity']);
                                                         $amount = $sold * floatval($row['amount']);
+                                                        $amount1 = $row['quantity'] * floatval($row['amount']);
                                                        echo '<tr>';
                                                         echo '<td>'.$i++.'</td>';
                                                         echo '<td>'.$customername.'</td>';
                                                         echo '<td>'.$v['sales_doc_no'].'</td>';
                                                         echo '<td>'.$v['stock_name'].'</td>';
-                                                        echo '<td>'.$v['quantity'].'</td>';
-                                                        echo '<td>'.$row['current_balance'].'</td>';
-                                                        echo '<td>'.$row['quantity'].'</td>';
-                                                        echo '<td>'.$sold.'</td>';
-                                                        echo '<td>'.$amount.'</td>';
+                                                        echo '<td>'. (!in_array($v['sales_doc_no'], $uniquesales)?$v['quantity']:0).'</td>';//shipped
+                                                        echo '<td>'.$row['current_balance'].'</td>';//previous balance
+                                                        echo '<td>'.$sold.'</td>';//sold
+                                                        echo '<td>'.$row['quantity'].'</td>';//balance
+                                                        echo '<td>'.number_format($amount).'</td>';//value sold
+                                                        echo '<td>'.number_format($amount1).'</td>';//value in store
                                                         echo '<td>'.date('d-m-Y H:i:s', strtotime($row['remit_date'])).'</td>';
                                                         echo '<td>'.$m[intval($mth) - 1].'</td>';
                                                         echo '<td>'.$row['sales_area'].'</td>';
                                                     echo '</tr>'; 
+                                                        if(!in_array($v['sales_doc_no'], $uniquesales)){
+                                                            array_push($uniquesales, $v['sales_doc_no']);
+                                                        }
                                                     }
                                                     
+                                                    
+                                                    
                                                     if($check == 0){
+                                                         $__month = 'January,February,March,April,May,June,July,August,September,October,November,December';
+                                                            $__m = explode(',', $month);
+                                                            $__y = explode('-', $v['sales_date'])[0];
+                                                            $___m = explode('-', $v['sales_date'])[1];
+                                                            $___m = intval($___m);
+                                                            $___m -= 1;
+
+                                            //                echo  $v['upload_date'];
+                                                            $this->model->set_query('select * from prices where stock_name= ? and month = ? and year = ? order by year DESC, month DESC LIMIT 1');
+                                                            $th = $this->model->map_request('raw_query', '', '', '', '', array($v['stock_name'], $__m[$___m], $y));
+                                            //                echo json_encode(array($v['upload_date'],$m[$_m],$y));exit();
+                                            //                echo json_encode($th);exit();
+                                                            $amt = intval($v['quantity']) * floatval($th[0]['selling_price']);
                                                          echo '<tr>';
                                                         echo '<td>'.$i++.'</td>';
                                                         echo '<td>'.$customername.'</td>';
                                                         echo '<td>'.$v['sales_doc_no'].'</td>';
                                                         echo '<td>'.$v['stock_name'].'</td>';
-                                                        echo '<td>'.$v['quantity'].'</td>';
-                                                        echo '<td>0</td>';
-                                                        echo '<td>0</td>';
-                                                        echo '<td>0</td>';
-                                                        echo '<td>0</td>';
+                                                        echo '<td>'.$v['quantity'].'</td>';//shipped
+                                                        echo '<td>0</td>';//previous balance
+                                                        echo '<td>0</td>';//sold
+                                                        echo '<td>'.$v['quantity'].'</td>';//balance
+                                                        echo '<td>0</td>';//value sold
+                                                        echo '<td>'.number_format($amt).'</td>';//value in store
                                                         echo '<td>DD-MM-YYYY</td>';
-                                                        echo '<td>'.$m[intval($mth) - 1].'</td>';
+                                                        echo '<td>NA</td>';
                                                         echo '<td>'.$v['sales_area'].'</td>';
                                                     echo '</tr>'; 
                                                     }
@@ -236,6 +264,11 @@
         <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
+        $.fn.digits = function(){ 
+            return this.each(function(){ 
+                $(this).text( $(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") ); 
+            })
+        }
         $('#cashtable').DataTable({
 //            "sPaginationType": "full_numbers",
             "footerCallback": function (row, data, start, end, display) {
@@ -277,8 +310,8 @@
                         .reduce(function (a, b) {
                             return intVal(a) + intVal(b);
                         }, 0);
-               pageTotal3 = api
-                        .column(5, {page: 'current'})
+               pageTotal9 = api
+                        .column(9, {page: 'current'})
                         .data()
                         .reduce(function (a, b) {
                             return intVal(a) + intVal(b);
@@ -291,26 +324,30 @@
                         }, 0);
 
                 // Update footer
+//                $(api.column(9).footer()).html(
+//                         pageTotal9 
+//                        
+//                        );
                 $(api.column(8).footer()).html(
                          pageTotal 
                         
-                        );
-                $(api.column(7).footer()).html(
-                         pageTotal1 
-                        
-                        );
+                        ).digits();
+//                $(api.column(7).footer()).html(
+//                         pageTotal1 
+//                        
+//                        );
                 $(api.column(6).footer()).html(
                          pageTotal2 
                         
-                        );
-                $(api.column(5).footer()).html(
-                         pageTotal3 
-                        
-                        );
-//                $(api.column(4).footer()).html(
-//                         pageTotal4 
+                        ).digits();
+//                $(api.column(5).footer()).html(
+//                         pageTotal3 
 //                        
 //                        );
+                $(api.column(4).footer()).html(
+                         pageTotal4 
+                        
+                        ).digits();
             }
 
         });
@@ -376,10 +413,10 @@
                          pageTotal 
                         
                         );
-                $(api.column(7).footer()).html(
-                         pageTotal1 
-                        
-                        );
+//                $(api.column(7).footer()).html(
+//                         pageTotal1 
+//                        
+//                        );
                 $(api.column(6).footer()).html(
                          pageTotal2 
                         

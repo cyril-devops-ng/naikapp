@@ -177,6 +177,12 @@
                     if($v['stock_name'] == 'PRE-STARTER'){
                         $prestarter += $v['quantity'];
                     }
+                    if($v['stock_name'] == 'HBC 30%'){
+                       $hbc30 += $v['quantity'];
+                    }
+                    if($v['stock_name'] == 'HLC 20%'){
+                       $hlc20 += $v['quantity'];
+                    }
                     $total += ( floatval(str_replace(',', '', $v['selling_price'])) * floatVal($v['quantity']) );
                 }
                 if($v['stock_type'] == 'Raw Materials'){
@@ -198,12 +204,7 @@
                     if($v['stock_name'] == 'Layers Mash'){
                        $layersmash += $v['quantity'];
                     }
-                    if($v['stock_name'] == 'HBC 30%'){
-                       $hbc30 += $v['quantity'];
-                    }
-                    if($v['stock_name'] == 'HLC 20%'){
-                       $hlc20 += $v['quantity'];
-                    }
+                    
                     $completefeed += ( floatval(str_replace(',', '', $v['selling_price'])) * floatVal($v['quantity']) );
                 }
 //                $total += $subtotal;
@@ -242,13 +243,25 @@
                 
                 if( $v['trans_type'] == 'Cash'  &&  $smonth == $month){//&&  $smonth == $month
 //                print_r($v) .'<br/>';
-                  $subsales +=  floatval(str_replace(',', '', $v['total_price']))  ;
+                  $subsales =  floatval(str_replace(',', '', $v['total_price']))  ;
                   $totalsales += $subsales;  
                   $subprofit = $subsales - (  floatval(str_replace(',','' ,$v['cost_price'])) * floatval($v['quantity']));
                   $totalprofit += $subprofit;
                   $grossprofit += $subprofit;
                 }
                 
+            }
+            
+            
+            foreach($_SESSION['cash_returns'] as $k=>$v){
+                 $s_m = $v['remit_date'];
+                $s_month = explode('-',$s_m);
+                $smonth = $s_month[1];
+                
+                if($smonth == $month){
+                    $ea = ( intval( $v['current_balance']) - intval( $v['quantity']) ) * $v['amount'];
+                    $totalsales += $ea;
+                }
             }
             
             //get employee basic pay
@@ -282,17 +295,10 @@
               <div class="stats-footer">itemize</div>
               </a> </div>
             
-            <div class="col-md-3 col-xs-12 col-sm-6"> <a href="#" class="stats-container">
-              <div class="stats-heading">Sales</div>
-              <div class="stats-body-alt"> 
-               
-                <div class="text-center"><span class="text-top">&#8358</span> <?= number_format($totalsales) ?></div>
-                <small>Sales for this month</small> </div>
-              <div class="stats-footer">go to account</div>
-              </a> </div>
             
             
-            <div class="col-md-3 col-xs-12 col-sm-6"> <a href="#" class="stats-container">
+            
+            <div class="col-md-6 col-xs-12 col-sm-6"> <a href="#" class="stats-container">
               <div class="stats-heading">Concentrates</div>
               <div class="stats-body-alt"> 
              
@@ -303,12 +309,12 @@
                
                
               <div class="col-md-3 col-xs-12 col-sm-6"> <a href="#" class="stats-container">
-              <div class="stats-heading">Customers</div>
+              <div class="stats-heading">Sales</div>
               <div class="stats-body-alt"> 
                
-                  <div class="text-center"><span class="text-top"></span> <?= count($_SESSION['all_naik_customers']) ?></div>
-                <small>All customers</small> </div>
-              <div class="stats-footer">view them</div>
+                <div class="text-center"><span class="text-top">&#8358</span> <?= number_format($totalsales) ?></div>
+                <small>Sales for this month</small> </div>
+              <div class="stats-footer">go to account</div>
               </a> </div>
               <div class="col-md-3 col-xs-12 col-sm-6"> <a href="#" class="stats-container">
               <div class="stats-heading">HLC 5%</div>
@@ -415,12 +421,12 @@
               <div class="stats-footer">View them</div>
               </a> </div>
             <div class="col-md-3 col-xs-12 col-sm-6"> <a href="#" class="stats-container">
-              <div class="stats-heading">Blank</div>
+              <div class="stats-heading">Customers</div>
               <div class="stats-body-alt"> 
-             
-                <div class="text-center"><span class="text-top"></span><?= $blank ?></div>
-                <small>Blank</small></div>
-              <div class="stats-footer"> view them</div>
+               
+                  <div class="text-center"><span class="text-top"></span> <?= count($_SESSION['all_naik_customers']) ?></div>
+                <small>All customers</small> </div>
+              <div class="stats-footer">view them</div>
               </a> </div>
             </div>
         </div>

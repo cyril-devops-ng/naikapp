@@ -254,6 +254,11 @@
         <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
+        $.fn.digits = function(){ 
+            return this.each(function(){ 
+                $(this).text( $(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") ); 
+            })
+        }
         $('#cashtable').DataTable({
 //            "sPaginationType": "full_numbers",
             "footerCallback": function (row, data, start, end, display) {
@@ -288,7 +293,7 @@
                 $(api.column(6).footer()).html(
                          pageTotal 
                         
-                        );
+                        ).digits();
             }
 
         });
@@ -327,7 +332,7 @@
                 $(api.column(6).footer()).html(
                          pageTotal 
                         
-                        );
+                        ).digits();
             }
 
         });

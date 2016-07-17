@@ -285,7 +285,7 @@
                                     for( var i=0;i<res.length;i++){
                                         sold =  Math.abs( parseInt(res[i]['current_balance']) - parseInt(res[i]['quantity']) );
                                        if( contains.call(entry,res[i]['remit_date'])){
-                                           row += '<tr>';
+                                           row += '<tr style="color:white;background-color:'+(res[i]['action']==='Refund'?'red':'green')+'">';
                                             row += '<td></td><td>'+res[i]['stock_name']+'</td><td>'+res[i]['shipped']+'</td><td>'+res[i]['current_balance']+'</td><td>'+res[i]['quantity']+'</td><td>'+sold+'</td><td>&#8358;'+( sold * parseFloat(res[i]['amount']))+'</td>';
                                             row += '</tr>';
                                             if( i < res.length-1 && res[i]['remit_date'] === res[i+1]['remit_date'] ){
@@ -300,7 +300,7 @@
                                             row += '<tr>';
                                             row += '<th>Sales ID</th><th>Stock Items</th><th>Shipped</th><th>Previous Balance</th><th>Balance</th><th>Sold</th><th>Value Sold</th>';
                                             row += '</tr>';
-                                            row += '<tr>';
+                                            row += '<tr style="color:white;background-color:'+(res[i]['action']==='Refund'?'red':'green')+'">';
                                             row += '<td>'+res[i]['sales_id']+'</td><td>'+res[i]['stock_name']+'</td><td>'+res[i]['shipped']+'</td><td>'+res[i]['current_balance']+'</td><td>'+res[i]['quantity']+'</td><td>'+sold+'</td><td>&#8358;'+ (sold * parseFloat(res[i]['amount']) )+'</td>';
                                             row += '</tr>';
                                             entry.push(res[i]['remit_date']);

@@ -148,6 +148,8 @@
                                                                     array_push($bal, array( $b['stock_name']=> $b['quantity'] ));
                                                                 }
                                                             }
+                                                            
+                                                            print '<pre>';print_r($_SESSION['salesdocument']);print'</pre>';
                                                         ?>
                                                        <table class="table table-striped table-images">
                                                             <thead>
@@ -294,8 +296,11 @@
                     });
                 });
                
+               var error = 0;
                 $('#save').click(function(){
+                    error = 0;
                     var cp = '', sp = '', row = ''; var prev = '';
+                    
                      $('.firstRow').each(function(){
 
                          var stockName = $(this).find('.stock_name').html();
@@ -313,21 +318,29 @@
                        documentdate:$('#documentdate').val()
                      };
                      
-                     $(this).prop('disabled','true');
+                    
                      $('.quantity').each(function(){
-                         
+                          if($(this).val() === ''){
+                            error += 1;
+                        }
                      });
-                     $('.preloader').show();
-                     $(this).prop('disabled',true);
-                     $.post('creditremit',data,function(msg,stat,xhr){
-                         if(xhr.readyState === 4){
-                             if(xhr.status === 200){
-                                 if(JSON.parse($.trim(msg)) === 'success'){
-                                     window.location.href = 'creditremitsuccess';
-                                 }
-                             }
-                         }
-                     });
+                     
+                     if(error == 0){
+                         $('.preloader').show();
+                        $(this).prop('disabled',true);
+                        $.post('creditremit',data,function(msg,stat,xhr){
+                            if(xhr.readyState === 4){
+                                if(xhr.status === 200){
+                                    if(JSON.parse($.trim(msg)) === 'success'){
+                                        window.location.href = 'creditremitsuccess';
+                                    }
+                                }
+                            }
+                        });
+                     }else{
+                         alert('Some fields are empty!');
+                     }
+                     
                 });
             })();
         </script>

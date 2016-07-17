@@ -12,18 +12,21 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Cyril/Documents/NetBeansProjects/naik_feeds/view/createstock.php</file>
+            <file>file:/C:/Users/Cyril/Documents/NetBeansProjects/naik_feeds/view/addexpense.php</file>
             <file>file:/C:/Users/Cyril/Documents/NetBeansProjects/naik_feeds/controller/controller.php</file>
-            <file>file:/C:/Users/Cyril/Documents/NetBeansProjects/naik_feeds/includes/db.inc.php</file>
-            <file>file:/C:/Users/Cyril/Documents/NetBeansProjects/naik_feeds/model/Model.mod.php</file>
-            <file>file:/C:/Users/Cyril/Documents/NetBeansProjects/naik_feeds/index.php</file>
-            <file>file:/C:/Users/Cyril/Documents/NetBeansProjects/naik_feeds/view/profitcustomer.php</file>
-            <file>file:/C:/Users/Cyril/Documents/NetBeansProjects/naik_feeds/includes/itmanagermenu.php</file>
+            <file>file:/C:/Users/Cyril/Documents/NetBeansProjects/naik_feeds/view/creditsalesreport.php</file>
             <file>file:/C:/Users/Cyril/Documents/NetBeansProjects/naik_feeds/view/home.php</file>
-            <file>file:/C:/Users/Cyril/Documents/NetBeansProjects/naik_feeds/view/myrmconsumption.php</file>
-            <file>file:/C:/Users/Cyril/Documents/NetBeansProjects/naik_feeds/view/rawmaterialreport.php</file>
-            <file>file:/C:/Users/Cyril/Documents/NetBeansProjects/naik_feeds/includes/factoryusermenu.php</file>
-            <file>file:/C:/Users/Cyril/Documents/NetBeansProjects/naik_feeds/view/rawmaterial.php</file>
-            <file>file:/C:/Users/Cyril/Documents/NetBeansProjects/naik_feeds/includes/receptionistmenu.php</file>
+            <file>file:/C:/Users/Cyril/Documents/NetBeansProjects/naik_feeds/view/createstockmd.php</file>
+            <file>file:/C:/Users/Cyril/Documents/NetBeansProjects/naik_feeds/view/creditreturns.php</file>
+            <file>file:/C:/Users/Cyril/Documents/NetBeansProjects/naik_feeds/view/reversal.php</file>
+            <file>file:/C:/Users/Cyril/Documents/NetBeansProjects/naik_feeds/view/reversalfailedavail.php</file>
+            <file>file:/C:/Users/Cyril/Documents/NetBeansProjects/naik_feeds/view/transferstock.php</file>
+            <file>file:/C:/Users/Cyril/Documents/NetBeansProjects/naik_feeds/view/createsales.php</file>
+            <file>file:/C:/Users/Cyril/Documents/NetBeansProjects/naik_feeds/view/reversalfailedqty.php</file>
+            <file>file:/C:/Users/Cyril/Documents/NetBeansProjects/naik_feeds/view/stocklist.php</file>
+            <file>file:/C:/Users/Cyril/Documents/NetBeansProjects/naik_feeds/view/stockfailure.php</file>
+            <file>file:/C:/Users/Cyril/Documents/NetBeansProjects/naik_feeds/view/addexpenseit.php</file>
         </group>
     </open-files>
 </project-private>

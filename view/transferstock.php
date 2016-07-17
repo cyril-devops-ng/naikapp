@@ -78,7 +78,7 @@
                                         <div class="form-group lable-padd">
                                             <label class="col-sm-3">Movement Date:</label>
                                             <div class="col-sm-6">
-                                                <input type="date"  class="form-control" placeholder="1" name="date" id="quantity" required />
+                                                <input type="date"  class="form-control"  name="date" id="quantity" required />
                                             </div>
                                             <div class="col-sm-3 left-align">
                                                 <p class="help-block"></p>
@@ -170,6 +170,14 @@
         <script src="js/to-do-admin.js"></script> 
         <script type='text/javascript' src='assets/plugins/form-inputmask/jquery.inputmask.min.js'></script> 
         <script type='text/javascript' src='assets/js/demo-mask.js'></script> 
+        <script src="http://cdn.jsdelivr.net/webshim/1.12.4/extras/modernizr-custom.js"></script>
+        <!-- polyfiller file to detect and load polyfills -->
+        <script src="http://cdn.jsdelivr.net/webshim/1.12.4/polyfiller.js"></script>
+        <script>
+          webshims.setOptions('waitReady', false);
+          webshims.setOptions('forms-ext', {types: 'date'});
+          webshims.polyfill('forms forms-ext');
+        </script>
         <!--switcher html start-->
         <!-- <div class="demo_changer active" style="right: 0px;">
           <div class="demo-icon"></div>

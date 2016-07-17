@@ -30,48 +30,12 @@
 </head>
 <body>
 <div class="container">
-  <div class="top-navbar header b-b"> <a data-original-title="Toggle navigation" class="toggle-side-nav pull-left" href="#"><i class="icon-reorder"></i> </a>
-      <div class="brand pull-left"> <H2>NAIK FEEDS</H2></div>
-    <ul class="nav navbar-nav navbar-right  hidden-xs">
-      <li class="dropdown"> <a data-toggle="dropdown" class="dropdown-toggle" href="#"> <i class="icon-warning-sign"></i> <span class="badge">2</span> </a>
-        <ul class="dropdown-menu extended notification">
-          <li class="title">
-            <p>You have 2 new stock movement today</p>
-          </li>
-          <li> <a href="#"> <span class="label label-success"><i class="icon-plus"></i></span> <span class="message"> 40 bags moved from Jos to Abuja.</span> <span class="time">1 mins</span> </a> </li>
-          <li> <a href="#"> <span class="label label-danger"><i class="icon-warning-sign"></i></span> <span class="message">40 bags moved from Jos to Abuja.</span> <span class="time">5 mins</span> </a> </li>
-          <li class="footer"> <a href="#">View all stock movements</a> </li>
-        </ul>
-      </li>
-     
-      <li class="dropdown"> <a data-toggle="dropdown" class="dropdown-toggle" href="#"> <i class="icon-envelope"></i> <span class="badge">3</span> </a>
-        <ul class="dropdown-menu extended notification">
-          <li class="title">
-            <p>You have 3 new sales</p>
-          </li>
-          <li> <a href="#"> <span class="label label-success"><i class="icon-plus"></i></span> <span class="message"> 40 bags sold from Jos Sales Area.</span> <span class="time">1 mins</span> </a> </li>
-          <li> <a href="#"> <span class="label label-danger"><i class="icon-warning-sign"></i></span> <span class="message">40 bags sold from Abuja Sales Area.</span> <span class="time">5 mins</span> </a> </li>
-          <li> <a href="#"> <span class="label label-danger"><i class="icon-warning-sign"></i></span> <span class="message">40 bags sold from Abuja Sales Area.</span> <span class="time">5 mins</span> </a> </li>
-          <li class="footer"> <a href="#">View all sales</a> </li>
-        </ul>
-      </li>
-      <li class="dropdown user  hidden-xs"> <a data-toggle="dropdown" class="dropdown-toggle" href="#"> <i class="icon-male"></i> <span class="username">Admin</span> <i class="icon-caret-down small"></i> </a>
-        <ul class="dropdown-menu">
-          <li><a href="user_profile.html"><i class="icon-user"></i> My Profile</a></li>
-          <li class="divider"></li>
-          <li><a href="logout"><i class="icon-key"></i> Log Out</a></li>
-        </ul>
-      </li>
-    </ul>
-    <form class="pull-right" >
-      <input type="search" placeholder="Search..." class="search" id="search-input">
-    </form>
-  </div>
+ <?php require_once 'includes/topbar.php'; ?>
 </div>
 <div class="wrapper">
   <div class="left-nav">
     <div id="side-nav">
-      <?php require_once 'includes/factoryusermenu.php'; ?>
+      <?php require_once 'includes/menu.php'; ?>
     </div>
   </div>
   <div class="page-content">
@@ -86,7 +50,7 @@
                     <button type="button" class="close close-sm" data-dismiss="alert"> <i class="icon-remove"></i> </button>
                     <h4> <i class="icon-remove"></i> Failure! </h4>
                     <p>The requested stock has not been shipped to this Customer and hence cannot be refunded.<br/>
-                    Kindly check your books from Credit Sales Report.</p>
+                    Kindly check your books from Credit Sales Report or Contact an Administrator</p>
                   </div>
       </div>
       
