@@ -854,7 +854,7 @@ class Controller {
             }
         }
         if ($_GET['view'] == 'transferstock') {
-            $stocklist = $this->model->map_request('retrieve', 'stocks', $_POST, 'sales_area', 'Factory ' . $_SESSION['user']['sales_area']);
+            $stocklist = $this->model->map_request('retrieve', 'stocks', $_POST, 'sales_area',  $_SESSION['user']['sales_area']);
             $_SESSION['transferstock'] = $stocklist;
 
 
@@ -898,7 +898,7 @@ class Controller {
                                 );
                                 $i = $this->model->map_request('insert', 'stock_request', $request_data);
                                 $_u = $this->model->map_request_mulwhere('update', 'stocks', array('quantity' => $newqty), array('stock_name', 'sales_area')
-                                        , array($stockname, 'Factory ' . $_SESSION['user']['sales_area']));
+                                        , array($stockname,  $_SESSION['user']['sales_area']));
 //                                print_r($_u);exit();
                                 if ($i > 0 & $_u > 0) {
                                     $this->current_page = 'view/transfersuccess.php';
@@ -909,7 +909,7 @@ class Controller {
                                 $n_qty = $r_check[0]['quantity'] + $qty;
                                 //_update
                                 $_u1 = $this->model->map_request_mulwhere('update', 'stocks', array('quantity' => $newqty), array('stock_name', 'sales_area')
-                                        , array($stockname, 'Factory ' . $_SESSION['user']['sales_area']));
+                                        , array($stockname, $_SESSION['user']['sales_area']));
 //                                $_u2 = $this->model->map_request_mulwhere('update', 'stocks', array('quantity' => $n_qty), array('stock_name', 'sales_area')
 //                                        , array($stockname, $salesarea));
 
@@ -1322,7 +1322,7 @@ class Controller {
         if ($_GET['view'] == 'createstock' || $_GET['view'] == 'createstockmd') {
             if ($_POST['stock']) {
                 $_check = $this->model->map_request_mulwhere('retrieve', 'stocks', $_POST, array('stock_name', 'sales_area')
-                        , array($_POST['stock'], 'Factory ' . $_SESSION['user']['sales_area']));
+                        , array($_POST['stock'],  $_SESSION['user']['sales_area']));
 
                 if (!empty($_check)) {
                     //update
@@ -1334,7 +1334,7 @@ class Controller {
 //                        'selling_price'=>$_POST['sellprice'],
                         'upload_date' => $_POST['upload_date']
                     );
-                    $r = $this->model->map_request_mulwhere('update', 'stocks', $data, array('stock_name', 'sales_area'), array($_POST['stock'], 'Factory ' . $_SESSION['user']['sales_area']));
+                    $r = $this->model->map_request_mulwhere('update', 'stocks', $data, array('stock_name', 'sales_area'), array($_POST['stock'],  $_SESSION['user']['sales_area']));
 
 //                    $date = date('d-m-Y H:i:s');
                     $date = $_POST['upload_date'];
@@ -1364,7 +1364,7 @@ class Controller {
 //                        'selling_price' => str_replace( ',', '', $_POST['sellprice'] ),
 //                        'upload_date' => date("Y-m-d H:i:s"),
                         'upload_date' => $_POST['upload_date'],
-                        'sales_area' => 'Factory ' . $_SESSION['user']['sales_area']
+                        'sales_area' => $_SESSION['user']['sales_area']
                     );
 
                     $res = $this->model->map_request('insert', 'stocks', $data);

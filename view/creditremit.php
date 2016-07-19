@@ -149,7 +149,7 @@
                                                                 }
                                                             }
                                                             
-                                                            print '<pre>';print_r($_SESSION['salesdocument']);print'</pre>';
+//                                                            print '<pre>';print_r($_SESSION['salesdocument']);print'</pre>';
                                                         ?>
                                                        <table class="table table-striped table-images">
                                                             <thead>
@@ -197,7 +197,7 @@
                                                                        
 //                                                                       $pb = $_p[$_c]==''?$v['quantity']:$_p[$_c];
                                                                        $m = $_p[$_c]==''?$v['quantity']:$_p[$_c];
-                                                                       
+                                                                       ++$_c;
                                                                         echo '<tr id="first" class="firstRow">';
                                                                         echo '<td class="index">'.$i++.'</td>';
                                                                         echo '<td class="stock_name">'.$v['stock_name'].'</td>';

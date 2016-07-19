@@ -107,6 +107,7 @@
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
                                             </tr>
                                         </tfoot>
                                         <tbody>
@@ -140,6 +141,9 @@
                                                         $sold = floatval($row['current_balance']) - floatval($row['quantity']);
                                                         $amount = $sold * floatval($row['amount']);
                                                         $amount1 = $row['quantity'] * floatval($row['amount']);
+                                                        
+                                                        
+                                                        
                                                        echo '<tr>';
                                                         echo '<td>'.$i++.'</td>';
                                                         echo '<td>'.$customername.'</td>';
@@ -150,7 +154,11 @@
                                                         echo '<td>'.$sold.'</td>';//sold
                                                         echo '<td>'.$row['quantity'].'</td>';//balance
                                                         echo '<td>'.number_format($amount).'</td>';//value sold
-                                                        echo '<td>'.number_format($amount1).'</td>';//value in store
+//                                                          if(current($v['sales_doc_no']) != next($v['sales_doc_no'])){
+                                                                echo '<td>'.number_format($amount1).'</td>';//value in store
+//                                                          }else{
+//                                                              echo '<td>0</td>';
+//                                                          }
                                                         echo '<td>'.date('d-m-Y H:i:s', strtotime($row['remit_date'])).'</td>';
                                                         echo '<td>'.$m[intval($mth) - 1].'</td>';
                                                         echo '<td>'.$row['sales_area'].'</td>';
@@ -324,10 +332,10 @@
                         }, 0);
 
                 // Update footer
-//                $(api.column(9).footer()).html(
-//                         pageTotal9 
-//                        
-//                        );
+                $(api.column(9).footer()).html(
+                         pageTotal9 
+                        
+                        ).digits();
                 $(api.column(8).footer()).html(
                          pageTotal 
                         
